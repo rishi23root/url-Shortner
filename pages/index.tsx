@@ -76,7 +76,18 @@ export default function Index({ data }: { data: tableData[] }) {
 			</Head>
 			<main>
 				<NavTop />
-				<NavUser />
+				<svg
+					className="m-auto mx-auto
+					md:w-4/6
+					mt-6"
+					height="1"
+					fill="#D9D9D9"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<rect width="100%" height="1" />
+				</svg>
+
+				<NavUser name={session?.user?.name} />
 				<FrameDiv>
 					<FormCustom session={session as Session}></FormCustom>
 					<div>Recent Requests</div>
