@@ -1,0 +1,11 @@
+@tailwind base;
+
+button,
+input,
+optgroup,
+select,
+textarea {
+	line-height: 1.15;
+}
+@tailwind components;
+@tailwind utilities;
