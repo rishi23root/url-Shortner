@@ -4,5 +4,18 @@ interface FrameDivProps {
 
 // stay always on center of page and auto layout then data enter
 export default function FrameDiv({ children }: FrameDivProps) {
-	return <div className="border-2 m-auto mx-auto">{children}</div>;
+	return (
+		<div
+			className="
+			m-auto mx-auto
+			md:w-4/5
+			my-4
+			p-4
+			border-2
+			rounded-lg
+			"
+		>
+			{children}
+		</div>
+	);
 }
