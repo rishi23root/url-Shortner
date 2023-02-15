@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { tableData } from "../utils/types";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 interface CustomTableProps {
 	data: tableData[];
 }
@@ -8,10 +9,10 @@ interface CustomTableProps {
 export default function CustomTable({ data }: CustomTableProps) {
 	const router = useRouter();
 	return (
-		<div>
-			<table className="table-auto">
+		<div className="p-2">
+			<table className="table-auto min-w-full text-center ">
 				{/* head */}
-				<thead>
+				<thead className="underline text-2xl capitalize">
 					<tr>
 						<th>s no.</th>
 						<th>slug</th>
@@ -21,19 +22,24 @@ export default function CustomTable({ data }: CustomTableProps) {
 					</tr>
 				</thead>
 				{/* body */}
-				<tbody>
+				<tbody className="text-xl cursor-pointer">
 					{data?.map((item, index) => {
 						return (
-							<tr
+							<motion.tr
 								key={item.id}
 								onClick={() => router.push(`/url/` + item.slug)}
+								whileHover={{
+									scale: 0.995,
+									backgroundColor: "#F3F4F6",
+								}}
+								whileTap={{ scale: 0.99 }}
 							>
 								<td>{index + 1}</td>
 								<td>{item.slug}</td>
 								<td>{item.url}</td>
 								<td>{item.count}</td>
 								<td>{item.updatedAt}</td>
-							</tr>
+							</motion.tr>
 						);
 					})}
 				</tbody>

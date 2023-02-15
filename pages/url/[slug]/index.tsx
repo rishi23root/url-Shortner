@@ -35,7 +35,7 @@ export default function Index({ data }: { data: tableData }) {
 			</Head>
 			<main>
 				<NavTop />
-				<NavUser />
+				<NavUser name={session?.user?.name as string} />
 				<FrameDiv>
 					{data ? (
 						<FormCustom

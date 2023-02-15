@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 interface FormCustomProps {
 	id?: string;
@@ -13,6 +14,11 @@ interface FormCustomProps {
 	action?: "Update" | "Create New";
 	session: Session;
 }
+
+
+// form is not submiiting the request  
+// need to check why submit event is not emiting 
+// code seems ok for other logical operations
 
 export default function FormCustom({
 	id,
@@ -25,6 +31,7 @@ export default function FormCustom({
 	// console.log(toUrl, url);
 	const [slug, setSlug] = useState<string>(code || randomCode());
 	const router = useRouter();
+	const [working, setWorking] = useState<boolean>(false);
 
 	function preRequestCheckupStatus() {
 		// alert if url is empty or custom code is not 5 characters long
@@ -41,6 +48,7 @@ export default function FormCustom({
 	var formHandler: any;
 	if (action == "Create New") {
 		formHandler = async (e: any) => {
+			console.log("create new");
 			e.preventDefault();
 
 			if (!preRequestCheckupStatus()) return;
@@ -102,43 +110,86 @@ export default function FormCustom({
 	} else {
 		new Error("action not define");
 	}
+
+	const handlerWrapper = async (e: any) => {
+		console.log(33);
+		await formHandler(e);
+		setWorking(false);
+	};
+
 	return (
 		<>
-			<form onSubmit={formHandler} className="flex flex-col gap-2">
-				{/* take url to shorten */}
-				<div className="cointainerBtnInput">
-					<label htmlFor="url">URL</label>
-					<input
-						type="text"
-						name="url"
-						defaultValue={url}
-						onChange={(e) => {
-							setUrl(e.target.value);
-						}}
-						className="border-2"
-					/>
-				</div>
-				{/* input Custom code */}
-				<div className="cointainerBtnInput">
-					<label htmlFor="customCode">Custom Code</label>
-					<input
-						type="text"
-						name="customCode"
-						defaultValue={slug}
-						onChange={(e) => {
-							setSlug(e.target.value);
-						}}
-						className="border-2"
-					/>
+			<form
+				onSubmit={() => {
+					console.log(124);
+				}}
+				className="flex flex-col gap-16 p-10"
+			>
+				<div className="flex gap-36 flex-wrap justify-center p-2">
+					{/* take url to shorten */}
+					<div className="cointainerBtnInput  items-start">
+						<label htmlFor="url" className="text-2xl font-bold">
+							Short Code
+						</label>
+						<input
+							type="text"
+							name="url"
+							defaultValue={url}
+							onChange={(e) => {
+								setUrl(e.target.value);
+							}}
+							className="border-2 boxShadow text-2xl w-full"
+						/>
+					</div>
+					{/* input Custom code */}
+					<div className="cointainerBtnInput items-start">
+						<label
+							htmlFor="customCode"
+							className="text-2xl font-bold"
+						>
+							Redirecting Url
+						</label>
+						<input
+							type="text"
+							name="customCode"
+							defaultValue={slug}
+							onChange={(e) => {
+								setSlug(e.target.value);
+							}}
+							className="border-2 boxShadow text-2xl w-full"
+						/>
+					</div>
 				</div>
 
-				<div className="cointainerBtn">
-					<button type="submit">{action}</button>
-				</div>
+				<div className="flex gap-36 flex-wrap justify-center p-2">
+					<motion.div
+						className="cointainerBtn bg-btnBlue"
+						whileTap={{ scale: 0.95 }}
+						onClick={() => {
+							// console.log("workingnow");
+							setWorking(true);
+						}}
+					>
+						<button
+							type="submit"
+							disabled={working}
+							className={
+								working
+									? "w-full h-full"
+									: "boxShadow w-full h-full"
+							}
+						>
+							{action}
+						</button>
+					</motion.div>
 
-				<div className="cointainerBtn">
-					<Link href="/checkAll">
-						<button>Check All</button>
+					<Link href="/checkAll ">
+						<motion.div
+							className="cointainerBtn bg-btnGrey boxShadow"
+							whileTap={{ scale: 0.95 }}
+						>
+							<button>Check All</button>
+						</motion.div>
 					</Link>
 				</div>
 				{/* <button type="submit">Submit</button> */}

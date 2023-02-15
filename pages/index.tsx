@@ -10,56 +10,15 @@ import { Session } from "next-auth";
 import { getAllUrls } from "@/utils/dbActions";
 import { tableData } from "../utils/types";
 import CustomTable from "@/components/CustomTable";
+import { useTheme } from "next-themes";
 
 export default function Index({ data }: { data: tableData[] }) {
 	const router = useRouter();
 
-	// const [url, setUrl] = useState<string>();
-	// const [slug, setSlug] = useState<string>(randomCode());
 	const { data: session, status } = useSession();
 	if (status == "unauthenticated") {
 		router.push("/auth/signin");
 	}
-
-	// const formHandler = async (e: any) => {
-	// 	e.preventDefault();
-	// 	// alert if url is empty or custom code is not 5 characters long
-	// 	if (url?.length == 0) {
-	// 		toast.warning("URL cannot be empty");
-	// 		return;
-	// 	} else if (slug?.length != 5) {
-	// 		toast.warning("Code must be 5 characters long");
-	// 		return;
-	// 	}
-
-	// 	// if (session?.user ) {
-	// 	// 	// check if id key exists in user
-	// 	// 	if (!session?.user?.id) {
-	// 	// 		toast.error("User not found");
-	// 	// 		return;
-	// 	// 	}
-	// 	// }
-
-	// 	// create a fetch request to the api
-	// 	const res = await fetch("/api/url", {
-	// 		method: "POST",
-	// 		body: JSON.stringify({
-	// 			url: url,
-	// 			slug: slug,
-	// 			userId: session?.user?.id,
-	// 		}),
-	// 		headers: { "Content-Type": "application/json" },
-	// 	});
-	// 	const data = await res.json();
-	// 	console.log(data);
-	// 	if (data.message) {
-	// 		toast.error(data.message);
-	// 	} else {
-	// 		toast.success("URL shortened successfully");
-	// 		// refresh page or reload table data
-	// 	}
-	// };
-
 	return (
 		<>
 			<Head>
@@ -87,10 +46,12 @@ export default function Index({ data }: { data: tableData[] }) {
 					<rect width="100%" height="1" />
 				</svg>
 
-				<NavUser name={session?.user?.name} />
+				<NavUser name={session?.user?.name as string} />
 				<FrameDiv>
 					<FormCustom session={session as Session}></FormCustom>
-					<div>Recent Requests</div>
+					<div className="font-bold text-4xl p-3">
+						Recent Requests
+					</div>
 					<CustomTable data={data} />
 				</FrameDiv>
 			</main>

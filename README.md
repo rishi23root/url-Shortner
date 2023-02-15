@@ -22,3 +22,6 @@ make authentication if u r even eligible for it
  -[ ] add useSesssion(required :true, redirect: '/login') to the pages 
  <!-- -[ ] make component for the table with serverside rendering and pagination -->
  <!-- -[ ] mask the /login and /register page to the admin/pages -->
+
+
+ - [ ] add loading page animation for the pages on chnge with next js  

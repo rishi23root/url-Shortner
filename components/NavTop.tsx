@@ -1,16 +1,22 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 interface navTopProps {}
 
 export default function NavTop({}: navTopProps) {
+	// extract breadcrubs from url
+	const { pathname } = useRouter();
 	return (
 		<div
 			className="
-			md:w-4/5 
+			md:w-9/12
 			flex 
 			m-auto 
 			justify-between
 			items-center
 			px-2
-			my-4
+			py-4
+			pt-8
 			"
 		>
 			{/* logo */}
@@ -18,7 +24,6 @@ export default function NavTop({}: navTopProps) {
 			<div
 				className="logoItself
 					text-3xl
-
 				"
 			>
 				{/* logo */}
@@ -26,13 +31,16 @@ export default function NavTop({}: navTopProps) {
 			</div>
 			<div className="breadCrumbs flex gap-1">
 				{/* breadcrums */}
-				{/* if on home show something good. */}
-				Home
-				{/* take form url  */}
-				<span className="">/</span>
-				Printer
-				<span className="">/</span>
-				Model
+				{pathname !== "/" ? (
+					<Link
+						href={"/"}
+						className="text-2xl cursor-pointer hover:underline"
+					>
+						Home
+					</Link>
+				) : (
+					<div></div>
+				)}
 			</div>
 		</div>
 	);

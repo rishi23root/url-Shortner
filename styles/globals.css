@@ -1,3 +1,82 @@
+*,
+::after,
+::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.boxShadow {
+	box-shadow: 0px 0px 17px 9px #0000001a;
+}
+
+/* body {
+	background-color: #b8b8b8;
+} */
+
+.darkFrameDiv {
+	background: linear-gradient(
+			110.38deg,
+			rgba(234, 59, 59, 0.2) 1.45%,
+			rgba(0, 0, 0, 0.2) 97.64%
+		),
+		#2c3e50;
+	box-shadow: 0px 0px 17px 9px #ffffff;
+}
+.lightFrameDiv {
+	@apply shadow-lg;
+	background: white;
+}
+
+.darking {
+	background: linear-gradient(
+			110.38deg,
+			rgba(234, 59, 59, 0.2) 1.45%,
+			rgba(0, 0, 0, 0.2) 97.64%
+		),
+		#2c3e50;
+}
+
+/* side bar */
+.helperhead {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.modelCointainer {
+	background-color: #000000c2;
+}
+
+body {
+	height: 100vh;
+	width: 100vw;
+	background-color: #f8f7f7;
+	@apply boxShadow;
+}
+
+.cointainerBtnInput {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 20rem;
+}
+.cointainerBtnInput input {
+	height: 3rem;
+	padding: 0.5em;
+}
+.cointainerBtn {
+	@apply rounded-md;
+	color: white;
+	width: 20rem;
+	height: 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.6em;
+}
+
 @tailwind base;
 
 button,
