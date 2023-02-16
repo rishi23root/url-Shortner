@@ -25,8 +25,10 @@ export default function checkall({ data }: { data: tableData[] }) {
 				<NavTop />
 				<NavUser />
 				<FrameDiv>
-					<div className="heading">All Urls</div>
-					<CustomTable data={data} />
+					<div className="heading font-bold text-4xl p-3">
+						All Urls
+					</div>
+					<CustomTable data={data} backBtn={true} />
 				</FrameDiv>
 			</main>
 		</>

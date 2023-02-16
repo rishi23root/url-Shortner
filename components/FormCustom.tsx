@@ -14,12 +14,6 @@ interface FormCustomProps {
 	action?: "Update" | "Create New";
 	session: Session;
 }
-
-
-// form is not submiiting the request  
-// need to check why submit event is not emiting 
-// code seems ok for other logical operations
-
 export default function FormCustom({
 	id,
 	toUrl = "",
@@ -97,7 +91,7 @@ export default function FormCustom({
 				headers: { "Content-Type": "application/json" },
 			});
 			const data = await res.json();
-			console.log(data);
+			// console.log(data);
 			if (data.message) {
 				toast.error(data.message);
 			} else {
@@ -112,7 +106,7 @@ export default function FormCustom({
 	}
 
 	const handlerWrapper = async (e: any) => {
-		console.log(33);
+		setWorking(true);
 		await formHandler(e);
 		setWorking(false);
 	};
@@ -120,16 +114,14 @@ export default function FormCustom({
 	return (
 		<>
 			<form
-				onSubmit={() => {
-					console.log(124);
-				}}
+				onSubmit={handlerWrapper}
 				className="flex flex-col gap-16 p-10"
 			>
 				<div className="flex gap-36 flex-wrap justify-center p-2">
 					{/* take url to shorten */}
 					<div className="cointainerBtnInput  items-start">
 						<label htmlFor="url" className="text-2xl font-bold">
-							Short Code
+							Redirecting Url
 						</label>
 						<input
 							type="text"
@@ -147,7 +139,7 @@ export default function FormCustom({
 							htmlFor="customCode"
 							className="text-2xl font-bold"
 						>
-							Redirecting Url
+							Short Code
 						</label>
 						<input
 							type="text"
@@ -165,10 +157,6 @@ export default function FormCustom({
 					<motion.div
 						className="cointainerBtn bg-btnBlue"
 						whileTap={{ scale: 0.95 }}
-						onClick={() => {
-							// console.log("workingnow");
-							setWorking(true);
-						}}
 					>
 						<button
 							type="submit"
