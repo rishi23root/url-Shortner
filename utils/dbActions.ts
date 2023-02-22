@@ -42,10 +42,22 @@ export const getUrl = async (slug: string) => {
 			},
 		});
 		// console.log(data);
+		// if data is null return error with not
+		if (!data) {
+			// console.log("data not found");
+			return {
+				data: {},
+				error: {
+					code: 202,
+					message: "code not found",
+				},
+			};
+		}
 		return { data, error: {} };
 	} catch (error: any) {
 		error.code = 202;
 		error.message = "code not found\n" + error.message;
+		// console.log(error.message);
 		return { data: {}, error };
 	}
 };

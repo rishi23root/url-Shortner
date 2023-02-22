@@ -31,13 +31,14 @@ export default async function handler(
 	if (req.method === "DELETE") {
 		// delete the url from database
 		const { data, error } = await deleteUrl(id as string);
-		// console.log(data, error);
+		console.log(data, error);
 		if (JSON.stringify(error) !== "{}") {
 			res.status(error.code).json({ message: error.message });
 		}
 		if (data && JSON.stringify(data) !== "{}") {
 			res.status(200).json(data);
 		}
+		return;
 	}
 
 	// if userId is undefined then show error
