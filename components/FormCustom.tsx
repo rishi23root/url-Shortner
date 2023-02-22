@@ -43,8 +43,6 @@ export default function FormCustom({
 	if (action == "Create New") {
 		formHandler = async (e: any) => {
 			console.log("create new");
-			e.preventDefault();
-
 			if (!preRequestCheckupStatus()) return;
 
 			// create a fetch request to the api
@@ -64,13 +62,12 @@ export default function FormCustom({
 			} else {
 				toast.success("URL shortened successfully");
 				// refresh page or reload table data
-				router.reload();
+				// refetch the request to get the new data
+				router.replace(router.asPath);
 			}
 		};
 	} else if (action == "Update") {
 		formHandler = async (e: any) => {
-			e.preventDefault();
-
 			if (!preRequestCheckupStatus()) return;
 
 			// console.log({
@@ -107,6 +104,8 @@ export default function FormCustom({
 
 	const handlerWrapper = async (e: any) => {
 		setWorking(true);
+		e.preventDefault();
+		toast.info("Creating New Entry...");
 		await formHandler(e);
 		setWorking(false);
 	};
@@ -115,9 +114,9 @@ export default function FormCustom({
 		<>
 			<form
 				onSubmit={handlerWrapper}
-				className="flex flex-col gap-16 p-10"
+				className="flex flex-col sm:gap-5 md:gap-10 lg:gap-16 p-10"
 			>
-				<div className="flex gap-36 flex-wrap justify-center p-2">
+				<div className="flex md:gap-5 lg:gap-36  flex-wrap justify-center p-2">
 					{/* take url to shorten */}
 					<div className="cointainerBtnInput  items-start">
 						<label htmlFor="url" className="text-2xl font-bold">
@@ -153,7 +152,7 @@ export default function FormCustom({
 					</div>
 				</div>
 
-				<div className="flex gap-36 flex-wrap justify-center p-2">
+				<div className="flex gap-5 lg:gap-36 flex-wrap justify-center p-2">
 					<motion.div
 						className="cointainerBtn bg-btnBlue"
 						whileTap={{ scale: 0.95 }}
@@ -171,11 +170,11 @@ export default function FormCustom({
 						</button>
 					</motion.div>
 
-					<Link href="/checkAll ">
-						<motion.div
-							className="cointainerBtn bg-btnGrey boxShadow"
-							whileTap={{ scale: 0.95 }}
-						>
+					<Link
+						href="/checkAll"
+						className="cointainerBtn bg-btnGrey boxShadow"
+					>
+						<motion.div whileTap={{ scale: 0.95 }}>
 							<button>Check All</button>
 						</motion.div>
 					</Link>

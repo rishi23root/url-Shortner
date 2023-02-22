@@ -12,15 +12,13 @@ import { useEffect } from "react";
 
 export default function Index({ data }: { data: tableData }) {
 	const router = useRouter();
-	// extract slug from url
-	const { slug } = router.query;
 	// if user is not authenticated, redirect to signin page
 	const { data: session } = useSession();
 	useEffect(() => {
 		if (!session) {
 			router.push("/auth/signin");
 		}
-		console.log(slug);
+		// console.log(slug);
 	});
 	return (
 		<>
@@ -37,16 +35,24 @@ export default function Index({ data }: { data: tableData }) {
 				<NavTop />
 				<NavUser name={session?.user?.name as string} />
 				<FrameDiv>
+					{/* {!data ? ()} */}
+					<h1 className="text-2xl">
+						{data.slug} {"-->"} {data.url}
+					</h1>
 					{data ? (
-						<FormCustom
-							id={data.id}
-							toUrl={data.url}
-							code={data.slug}
-							session={session as Session}
-							action="Update"
-						/>
+						<>
+							<FormCustom
+								id={data.id}
+								toUrl={data.url}
+								code={data.slug}
+								session={session as Session}
+								action="Update"
+							/>
+							{/* delete btn for the entry and notify */}
+							sdjkfhadsjk
+						</>
 					) : (
-						<h1>404</h1>
+						<h1 className="text-2xl">404 - Entry Not Found</h1>
 					)}
 				</FrameDiv>
 			</main>

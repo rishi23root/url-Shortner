@@ -11,7 +11,7 @@ export default function FrameDiv({ children }: FrameDivProps) {
 		<div
 			className={`
 			${theme === "dark" ? "darkFrameDiv" : "lightFrameDiv"} "
-			m-auto mx-auto md:w-4/5 my-4 p-4 
+			m-auto mx-auto md:w-4/5 p-4 
 			border-2 rounded-lg  
 			boxShadow
 			"`}

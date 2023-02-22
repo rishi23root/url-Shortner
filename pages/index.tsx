@@ -10,7 +10,6 @@ import { Session } from "next-auth";
 import { getAllUrls } from "@/utils/dbActions";
 import { tableData } from "../utils/types";
 import CustomTable from "@/components/CustomTable";
-import { useTheme } from "next-themes";
 
 export default function Index({ data }: { data: tableData[] }) {
 	const router = useRouter();
@@ -62,7 +61,7 @@ export default function Index({ data }: { data: tableData[] }) {
 // get server side props and show last 5-10 post
 export async function getServerSideProps(context: any) {
 	const session = await getSession(context);
-	const { data, error } = await getAllUrls(session?.user?.id);
+	const { data, error } = await getAllUrls(session?.user?.id as string, 10);
 	console.log(data);
 	if (JSON.stringify(error) !== "{}") {
 		return {

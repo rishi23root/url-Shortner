@@ -1,56 +1,91 @@
-import Link from "next/link";
 import { tableData } from "../utils/types";
-import { motion } from "framer-motion";
+import { useRouter } from "next/router";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { useWindowSize } from "@react-hook/window-size";
+import { formatDate } from "../utils/util";
 interface CustomTableProps {
 	data: tableData[];
 	backBtn?: boolean;
 }
 
 export default function CustomTable({ data, backBtn }: CustomTableProps) {
+	const [width, height] = useWindowSize();
 	const { theme } = useTheme();
-	const formatDate = (dateString: string) => {
-		const options = { year: "numeric", month: "long", day: "numeric" };
-		return new Date(dateString).toLocaleDateString(
-			undefined,
-			options as any,
-		);
-	};
+	const router = useRouter();
+
+	// for solving the hydration issue only
+	const [hydrated, setHydrated] = useState(false);
+	useEffect(() => {
+		setHydrated(true);
+	}, []);
+
+	if (!hydrated) {
+		// Returns null on first render, so the client and server match
+		return null;
+	}
+
+	// use conditioinial rendering for the table data and on mobile screen only
+	// full url with slug and count
+
 	return (
-		<div className="p-2">
-			<table className="table-auto min-w-full text-center ">
+		<div className="p-2 w-full">
+			<div
+				className="table table-auto min-w-full max-w-full text-center  
+			"
+			>
 				{/* head */}
-				<thead className="underline text-2xl capitalize mb-3">
-					<tr>
-						<th>s no.</th>
-						<th>slug</th>
-						<th>url</th>
-						<th>count</th>
-						<th>updatedAt</th>
-					</tr>
-				</thead>
+				<div
+					className="table-row underline font-bold 
+						text-2xl 
+						mds:text-sm
+						capitalize mb-3"
+				>
+					<div className="table-cell">s no.</div>
+					<div className="table-cell">slug</div>
+					{width > 768 && <div className="table-cell">url</div>}
+					<div className="table-cell">count</div>
+					{width > 768 && <div className="table-cell">updatedAt</div>}
+				</div>
 				{/* body */}
-				<tbody className="text-xl cursor-auto">
+				{/* <tbody className=""> */}
+				<AnimatePresence>
 					{data?.map((item, index) => {
+						let date: any = new Date(item.updatedAt);
+						date = formatDate(date.toString());
 						return (
-							<motion.tr
+							<motion.div
 								key={item.id}
 								whileHover={{
 									scale: 0.995,
 									backgroundColor: "#F3F4F65a",
 								}}
 								whileTap={{ scale: 0.99 }}
-								className="tableEntry hover:shadow-lg relative"
+								className="table-row tableEntry hover:shadow-lg relative text-xl "
 							>
-								<td>{index + 1}</td>
-								<td>
-									<Link href={item.slug}>{item.slug}</Link>
-								</td>
-								<td>{item.url} </td>
-								<td>{item.count}</td>
-								<td>{formatDate(item.updatedAt)}</td>
-								<Link
-									href={`/url/` + item.slug}
+								<div className="table-cell">{index + 1}</div>
+								<div
+									onClick={(_) => router.push(item.slug)}
+									className="table-cell cursor-pointer"
+								>
+									{width < 768 && router.pathname}
+									{item.slug}
+								</div>
+								{width > 768 && (
+									<div className="table-cell">
+										{item.url}{" "}
+									</div>
+								)}
+								<div className="table-cell">{item.count}</div>
+								{width > 768 && (
+									<div className="table-cell">{date}</div>
+								)}
+
+								<button
+									onClick={() => {
+										router.push(`/url/` + item.slug);
+									}}
 									className="absolute cursor-pointer right-0 top-0 px-2"
 								>
 									<svg
@@ -69,18 +104,17 @@ export default function CustomTable({ data, backBtn }: CustomTableProps) {
 											}
 										/>
 									</svg>
-								</Link>
-							</motion.tr>
+								</button>
+							</motion.div>
 						);
 					})}
-				</tbody>
-			</table>
+				</AnimatePresence>
+				{/* </tbody> */}
+			</div>
 			{backBtn && (
 				<div className="w-full flex justify-end p-4">
 					<motion.button
-						onClick={() => {
-							router.back();
-						}}
+						onClick={router.back}
 						whileTap={{ scale: 0.99 }}
 						className="cointainerBtn bg-btnGrey boxShadow"
 					>
