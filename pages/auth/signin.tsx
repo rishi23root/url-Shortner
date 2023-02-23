@@ -1,11 +1,33 @@
-import Image from "next/image";
-import React, { useState } from "react";
+// import Image from "next/image";
+import React, { useState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
 import { toast } from "react-toastify";
+import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 
 type Props = {};
 export default function Signin({}: Props) {
+	const { theme } = useTheme();
+	const ref = useRef<HTMLFormElement>(null);
+	const [hostname, setHostname] = useState<string>("");
+	useEffect(() => {
+		setHostname(window.location.hostname);
+		const div = ref.current;
+		if (div) {
+			// add or remove class to div
+			if (theme === "dark") {
+				div.classList.remove("lightFrameDiv");
+				div.classList.add("darkFrameDiv");
+			}
+			if (theme === "light") {
+				div.classList.remove("darkFrameDiv");
+				div.classList.add("lightFrameDiv");
+			}
+			// dark:darkFrameDiv
+			// ${theme === "dark" ? "darkFrameDiv" : "lightFrameDiv"} "
+		}
+	}, [theme]);
 	interface IUserInfo {
 		email: string;
 		password: string;
@@ -27,35 +49,54 @@ export default function Signin({}: Props) {
 			toast.success("Login Successfull");
 			Router.replace("/");
 		}
-		console.log(res);
+		// console.log(res);
 	};
 	return (
-		<div className="flex items-center justify-center bg-gray-200 h-screen">
+		<div className="flex items-center justify-center bg-gray-200 h-screen realative">
+			<div className="absolute top-10 left-10 text-6xl">SignIn</div>
 			<form
-				className="flex flex-col gap-4 border w-2/6 h-fit border-gray-300 rounded-md p-4 shadow-md bg-gray-800 dark:bg-gray-200 dark:border-gray-600"
+				ref={ref}
+				className="flex 
+				flex-col
+				justify-evenly
+				items-center 
+				gap-4 
+				h-3/5 
+				m-auto mx-auto md:w-4/5  
+				
+				border  
+				rounded-md 
+				p-8 
+				shadow-md 
+				"
 				onSubmit={handleSubmit}
 			>
-				<div className="imageCointainer w-full flex justify-center">
-					<Image
+				<div className="imageCointainer w-full flex justify-center text-4xl">
+					{/* <Image
 						src="/gold.png"
 						alt="logo"
 						width={400}
 						height={310}
 						priority
-					/>
+					/> */}
+					{hostname}
 				</div>
 				<div>
 					<label
 						htmlFor="email"
 						className="block mb-2 text-sm font-medium dark:text-gray-300 text-gray-200"
 					>
-						email
+						Email
 					</label>
 					<input
 						type="email"
 						id="email"
-						className="bg-gray-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-						placeholder="admin"
+						className="
+						w-80
+						h-12
+						bg-gray-500 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 
+						block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						placeholder="test@test.com"
 						required
 						value={userInfo.email}
 						onChange={(e) =>
@@ -76,7 +117,11 @@ export default function Signin({}: Props) {
 					<input
 						type="password"
 						id="password"
-						className="bg-gray-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						className="
+						w-80
+						h-12
+						bg-gray-500 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 
+						block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 						placeholder="********"
 						required
 						value={userInfo.password}
@@ -88,12 +133,27 @@ export default function Signin({}: Props) {
 						}
 					/>
 				</div>
-				<button
-					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+				<motion.button
+					whileTap={{ scale: 0.9 }}
+					whileHover={{ scale: 1.1 }}
+					// bg-blue-500
+					// hover:bg-blue-700
+					className="cointainerBtn bg-btnBlue boxShadow font-bold py-2 px-4 rounded "
 					type="submit"
 				>
 					submit
-				</button>
+				</motion.button>
+				<motion.div
+					// move user to create new entry
+					whileTap={{ scale: 0.9 }}
+					whileHover={{ scale: 1.1 }}
+					className="cointainerBtn bg-btnGrey boxShadow font-bold py-2 px-4 rounded "
+					onTap={() => {
+						Router.push("/auth/signup");
+					}}
+				>
+					SignUp
+				</motion.div>
 			</form>
 		</div>
 	);
