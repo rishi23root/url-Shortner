@@ -25,7 +25,7 @@ export default function RedirectPage({
 		if (isFound) {
 			if (!Url.startsWith("http")) {
 				// eslint-disable-next-line react-hooks/exhaustive-deps
-				// Url = `http://${Url}`;
+				Url = `http://${Url}`;
 				console.log(Url);
 			}
 
