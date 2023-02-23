@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
@@ -11,6 +11,7 @@ export default function Signin({}: Props) {
 	const { theme } = useTheme();
 	const ref = useRef<HTMLFormElement>(null);
 	const [hostname, setHostname] = useState<string>("");
+
 	useEffect(() => {
 		setHostname(window.location.hostname);
 		const div = ref.current;
@@ -28,29 +29,37 @@ export default function Signin({}: Props) {
 			// ${theme === "dark" ? "darkFrameDiv" : "lightFrameDiv"} "
 		}
 	}, [theme]);
+
 	interface IUserInfo {
+		name: string;
 		email: string;
 		password: string;
 	}
+
 	const [userInfo, setUserInfo] = useState<IUserInfo>({
+		name: "",
 		email: "",
 		password: "",
 	});
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const res = await signIn("credentials", {
-			email: userInfo.email,
-			password: userInfo.password,
-			redirect: false,
-		});
-		if (res?.error) {
-			toast.error(res.error);
-		} else {
-			toast.success("Login Successfull");
-			Router.replace("/");
-		}
+		toast.info("Adding New User !!");
+		console.log(userInfo);
+		// const res = await signIn("credentials", {
+		// 	email: userInfo.email,
+		// 	password: userInfo.password,
+		// 	redirect: false,
+		// });
+		// if (res?.error) {
+		// 	toast.error(res.error);
+		// } else {
+		// 	toast.success("Login Successfull");
+		// 	Router.replace("/");
+		// }
 		// console.log(res);
 	};
+
 	return (
 		<div className="flex items-center justify-center bg-gray-200 h-screen realative">
 			<div className="absolute top-10 left-10 text-6xl">SignUp</div>
@@ -80,6 +89,32 @@ export default function Signin({}: Props) {
 						priority
 					/> */}
 					{hostname}
+				</div>
+				<div>
+					<label
+						htmlFor="name"
+						className="block mb-2 text-sm font-medium dark:text-gray-300 text-gray-200"
+					>
+						Name
+					</label>
+					<input
+						type="text"
+						id="name"
+						className="
+						w-80
+						h-12
+						bg-gray-500 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 
+						block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						placeholder="john"
+						required
+						value={userInfo.name}
+						onChange={(e) =>
+							setUserInfo({
+								...userInfo,
+								name: e.target.value,
+							})
+						}
+					/>
 				</div>
 				<div>
 					<label
