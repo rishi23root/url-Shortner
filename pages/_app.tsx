@@ -30,7 +30,7 @@ export default function App({
 
 	return (
 		<AnimatePresence>
-			<SessionProvider session={session}>
+			<SessionProvider session={session} refetchInterval={5 * 60}>
 				<ThemeProvider
 					themes={["system", "light", "dark"]}
 					enableSystem={true}

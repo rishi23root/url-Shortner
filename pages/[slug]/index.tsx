@@ -27,7 +27,10 @@ export default function RedirectPage({
 		// }, 500);
 		if (isFound) {
 			if (!Url.startsWith("http://") || !Url.startsWith("https://"))
-				router.push(`http://${Url}`);
+				// eslint-disable-next-line react-hooks/exhaustive-deps
+				Url = `https://${Url}`;
+
+			router.push(Url);
 		}
 	}, [Url, isFound, router]);
 

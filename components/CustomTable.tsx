@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "@react-hook/window-size";
 import { formatDate } from "../utils/util";
+import { toast } from "react-toastify";
 interface CustomTableProps {
 	data: tableData[];
 	backBtn?: boolean;
@@ -56,18 +57,26 @@ export default function CustomTable({ data, backBtn }: CustomTableProps) {
 						date = formatDate(date.toString());
 						return (
 							<motion.div
+								onTap={() => {
+									toast.info(
+										`Copied to clipboard ${window.location.origin}/${item.slug}`,
+									);
+									navigator.clipboard.writeText(
+										`${window.location.origin}/${item.slug}`,
+									);
+								}}
 								key={item.id}
 								whileHover={{
 									scale: 0.995,
 									backgroundColor: "#F3F4F65a",
 								}}
 								whileTap={{ scale: 0.99 }}
-								className="table-row tableEntry hover:shadow-lg relative text-xl "
+								className="table-row tableEntry hover:shadow-lg relative text-xl cursor-grab"
 							>
 								<div className="table-cell">{index + 1}</div>
 								<div
 									onClick={(_) => router.push(item.slug)}
-									className="table-cell cursor-pointer"
+									className="table-cell cursor-alias"
 								>
 									{width < 768 && router.pathname}
 									{item.slug}

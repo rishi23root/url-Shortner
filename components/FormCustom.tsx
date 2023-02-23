@@ -14,6 +14,16 @@ interface FormCustomProps {
 	action?: "Update" | "Create New";
 	session: Session;
 }
+
+function isValidUrl(url) {
+	// Regular expression to match a valid URL with optional http/https prefix
+	const urlRegex =
+		/^(http[s]?:\/\/)?([\w]*)?.([\w]+)[.]([\w]{2,})(\/)?[\w\/]*$/;
+
+	// Test the input string against the regex
+	return urlRegex.test(url);
+}
+
 export default function FormCustom({
 	id,
 	toUrl = "",
@@ -29,8 +39,12 @@ export default function FormCustom({
 
 	function preRequestCheckupStatus() {
 		// alert if url is empty or custom code is not 5 characters long
+		setUrl(url.trim());
 		if (url?.length == 0) {
 			toast.warning("URL cannot be empty");
+			return false;
+		} else if (!isValidUrl(url)) {
+			toast.warning("URL is not valid");
 			return false;
 		} else if (slug?.length != 5) {
 			toast.warning("Code must be 5 characters long");
@@ -39,6 +53,7 @@ export default function FormCustom({
 			return true;
 		}
 	}
+
 	var formHandler: any;
 	if (action == "Create New") {
 		formHandler = async (e: any) => {

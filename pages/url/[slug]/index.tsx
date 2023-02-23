@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { deleteUrl } from "../../../utils/dbActions";
 import Link from "next/link";
 
 export default function Index({ data }: { data: tableData }) {
@@ -48,7 +47,9 @@ export default function Index({ data }: { data: tableData }) {
 					{data && JSON.stringify(data) !== "{}" ? (
 						<div className="relative ">
 							<h1 className="text-2xl">
-								{data.slug} {"-->"} {data.url}
+								<span className="font-bold">{data.slug}</span>
+								{" --> "}
+								<span className="font-bold">{data.url}</span>
 							</h1>
 							<FormCustom
 								id={data.id}
