@@ -32,7 +32,7 @@ export default function RedirectPage({
 				console.log(Url);
 			}
 
-			// router.push(Url);
+			router.push(Url);
 		}
 	}, [Url, isFound, router]);
 
