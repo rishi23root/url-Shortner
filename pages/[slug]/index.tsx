@@ -26,11 +26,13 @@ export default function RedirectPage({
 		// setTimeout(() => {
 		// }, 500);
 		if (isFound) {
-			if (!Url.startsWith("http://") || !Url.startsWith("https://"))
+			if (!Url.startsWith("http")) {
 				// eslint-disable-next-line react-hooks/exhaustive-deps
-				Url = `https://${Url}`;
+				// Url = `http://${Url}`;
+				console.log(Url);
+			}
 
-			router.push(Url);
+			// router.push(Url);
 		}
 	}, [Url, isFound, router]);
 
@@ -41,8 +43,9 @@ export default function RedirectPage({
 					<title>Redirecting to {Url}</title>
 				</Head>
 				<div className="flex flex-col items-center justify-center h-screen">
-					<div className="flex flex-col items-center justify-center space-y-4">
+					<div className="flex flex-col items-center justify-center space-y-4 ">
 						<Image
+							className="transition h-10/12 w-11/12 border"
 							src="/redirect.gif"
 							alt="redirecting"
 							width={300}
@@ -67,8 +70,9 @@ export default function RedirectPage({
 				<title>Redirecting url not found</title>
 			</Head>
 			<div className="flex flex-col items-center justify-center h-screen">
-				<div className="flex flex-col items-center justify-center space-y-4">
+				<div className="flex flex-col items-center justify-center space-y-4 w-full">
 					<Image
+						className="h-5/12 w-5/12"
 						src="/404.gif"
 						alt="redirecting"
 						width={300}

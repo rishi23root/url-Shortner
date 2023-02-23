@@ -3,7 +3,7 @@ import { randomCode } from "@/utils/util";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
@@ -36,6 +36,11 @@ export default function FormCustom({
 	const [slug, setSlug] = useState<string>(code || randomCode());
 	const router = useRouter();
 	const [working, setWorking] = useState<boolean>(false);
+	const inputref = useState<HTMLInputElement>(null);
+
+	useEffect(() => {
+		inputref.current.value = slug;
+	}, [inputref, slug]);
 
 	function preRequestCheckupStatus() {
 		// alert if url is empty or custom code is not 5 characters long
@@ -78,6 +83,7 @@ export default function FormCustom({
 				toast.success("URL shortened successfully");
 				// refresh page or reload table data
 				// refetch the request to get the new data
+				setSlug(randomCode());
 				router.replace(router.asPath);
 			}
 		};
@@ -156,9 +162,9 @@ export default function FormCustom({
 							Short Code
 						</label>
 						<input
+							ref={inputref}
 							type="text"
 							name="customCode"
-							defaultValue={slug}
 							onChange={(e) => {
 								setSlug(e.target.value);
 							}}
