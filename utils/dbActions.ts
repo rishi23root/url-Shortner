@@ -203,8 +203,12 @@ export const loginReq = async (email: string, password: string) => {
 };
 
 // register
-export const signinReq = async (email: string, password: string) => {
-	const name = email.split("@")[0];
+export const newSigninReq = async (
+	name: string,
+	email: string,
+	password: string,
+) => {
+	// const name = email.split("@")[0];
 	try {
 		const data = await prisma.user.create({
 			data: {
@@ -215,8 +219,13 @@ export const signinReq = async (email: string, password: string) => {
 		});
 		return { data, error: {} };
 	} catch (error: any) {
+		// console.log("this", error.code);
+		if (error.code === "P2002") {
+			error.message = "email already exist";
+		} else {
+			error.message = "error in creating user";
+		}
 		error.code = 202;
-		error.message = "already exist";
 		return { data: {}, error };
 	}
 };

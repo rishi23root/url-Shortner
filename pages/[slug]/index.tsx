@@ -22,9 +22,6 @@ export default function RedirectPage({
 				: "",
 		);
 
-		// settimeout(() => {
-		// setTimeout(() => {
-		// }, 500);
 		if (isFound) {
 			if (!Url.startsWith("http")) {
 				// eslint-disable-next-line react-hooks/exhaustive-deps

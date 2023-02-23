@@ -46,18 +46,21 @@ export default function Signin({}: Props) {
 		e.preventDefault();
 		toast.info("Adding New User !!");
 		console.log(userInfo);
-		// const res = await signIn("credentials", {
-		// 	email: userInfo.email,
-		// 	password: userInfo.password,
-		// 	redirect: false,
-		// });
-		// if (res?.error) {
-		// 	toast.error(res.error);
-		// } else {
-		// 	toast.success("Login Successfull");
-		// 	Router.replace("/");
-		// }
-		// console.log(res);
+		const res = await fetch("/api/user/", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(userInfo),
+		});
+		const data = await res.json();
+		// notify according to response
+		if (res.status === 200) {
+			toast.success("User Added Successfully");
+			Router.replace("/auth/signin");
+		} else {
+			toast.error(data.message);
+		}
 	};
 
 	return (
