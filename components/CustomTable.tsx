@@ -75,7 +75,11 @@ export default function CustomTable({ data, backBtn }: CustomTableProps) {
 							>
 								<div className="table-cell">{index + 1}</div>
 								<div
-									onClick={(_) => router.push(item.slug)}
+									onClick={(_) => {
+										// router.push(item.slug);
+										// redirect to new page with slug
+										window.open(item.slug, "_blank");
+									}}
 									className="table-cell cursor-alias"
 								>
 									{width < 768 && router.pathname}

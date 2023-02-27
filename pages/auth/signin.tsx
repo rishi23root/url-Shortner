@@ -49,7 +49,7 @@ export default function Signin({}: Props) {
 			toast.success("Login Successfull");
 			Router.replace("/");
 		}
-		// console.log(res);
+		console.log(res);
 	};
 	return (
 		<div className="flex items-center justify-center bg-gray-200 h-screen realative">

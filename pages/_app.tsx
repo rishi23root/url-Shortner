@@ -35,6 +35,7 @@ export default function App({
 					themes={["system", "light", "dark"]}
 					enableSystem={true}
 					attribute="class"
+					defaultTheme="dark"
 				>
 					<ToastContainer />
 					<Component {...pageProps} />

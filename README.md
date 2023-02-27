@@ -1,6 +1,5 @@
-make the apis
-
-make authentication if u r even eligible for it
+# Url Shortner
+<!-- make authentication if u r even eligible for it
 /[slug]    :   # Path: api/[slug].js  -> redirect the user from database if not exist redirect user to error page
 /url       :   # Path: api/url.js     -> method-post -> create a new url , data={slug, url} 
                                        > method-get -> get the url from database , on query get that much of recent entry
@@ -9,10 +8,10 @@ make authentication if u r even eligible for it
                                          -> method-put -> update the url from database , data={slug, url}
                                          -> method-put -> update the url from database , data={slug, url}
                                          -> method-delete -> delete the url from database , on query get that much of recent entry
-                                         -> method-delete -> delete the url from database , on query get that much of recent entry
+                                         -> method-delete -> delete the url from database , on query get that much of recent entry -->
 
 
-<!-- to do -->
+## To-do
  - [x] connet user login to the database
  - [x] rename admin folder to auth folder
  - [x] middleware for the authentication api and the url api only
@@ -24,3 +23,8 @@ make authentication if u r even eligible for it
  - [ ] update the redirect path after that 
  <!-- -[ ] make component for the table with serverside rendering and pagination -->
  <!-- -[ ] mask the /login and /register page to the admin/pages -->
+
+
+## fixes
+ - [x] update metatags for teh pages and update the logos for the pages and title for the pages
+ - [x] update redirect to new page 
