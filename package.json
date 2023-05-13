@@ -2,7 +2,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
+		"build": "npm run prisma-g && next build",
 		"start": "next start",
 		"lint": "next lint",
 		"check-types": "tsc --pretty --noEmit",
